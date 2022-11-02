@@ -20,7 +20,7 @@ pip install -U jillw
 
 ```shell
 > jillw create --help
-usage: create [-h] [--name NAME] [--upstream UPSTREAM] [--version VERSION] [--confirm CONFIRM] [--unstable UNSTABLE] [name] [upstream] [version] [confirm] [unstable]
+usage: create [-h] [--name NAME] [--upstream UPSTREAM] [--version VERSION] [--confirm] [--unstable] [name] [upstream] [version]
 
 # create a new environment using Julia 1.8
 > jillw create myenv --version 1.8
