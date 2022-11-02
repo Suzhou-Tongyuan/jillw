@@ -5,7 +5,7 @@ JILL Wrapper (`jillw`) is a lightweight and cross-platform Julia version manager
 `jillw` targets several different use cases:
 
 1. cross-platform julia installation
-2. cross-platform julia version management
+2. cross-platform julia version management (create, switch, remove, etc.)
 3. providing the "one Julia, one Python" installation
 
 ## Installation
