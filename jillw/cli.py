@@ -23,7 +23,7 @@ def cmd_session():
     try:
         yield
     except IOError as e:
-        print(wisepy2.Red("{}: {}".format(type(e).__name__, str(e))), file=sys.stderr)
+        print(wisepy2.Red("{}: {}".format(type(e).__name__, str(e))))
         sys.exit(1)
 
 
@@ -35,7 +35,7 @@ def expect_no_stdout():
             yield
     finally:
         msg = sio.getvalue()
-        print(wisepy2.Red(msg), file=sys.stderr)
+        print(wisepy2.Red(msg))
 
 
 def _expand_or_resolve(p: Path | str):
@@ -70,7 +70,7 @@ def run_with_activated_env(cmd: list[str]):
     current: str | None = config["current"]
 
     if current is None:
-        print(wisepy2.Yellow("No activated environment"), sys.stdout)
+        print(wisepy2.Yellow("No activated environment"))
         return
     env = Path(Ops.env(current))
     jlbindir = find_julia_binary_dir(env)
@@ -104,8 +104,8 @@ class Main:
     @staticmethod
     def create(
         name: str,
-        upstream: str = "",
         version: str = "",
+        upstream: str = "",
         confirm: bool = False,
         unstable: bool = False,
     ):

@@ -3,6 +3,7 @@ import venv
 import wisepy2
 import shutil
 import json
+import sys
 from pathlib import Path
 from jill.install import install_julia
 
@@ -40,12 +41,13 @@ class Ops:
         venv.create(envdir.as_posix(), with_pip=True)
         root.mkdir(mode=0o755, parents=True, exist_ok=True)
         install_julia(
-            version=version or "stable",
+            version=version or name,
             install_dir=envdir.joinpath("julia").as_posix(),
             confirm=confirm,
             upstream=upstream,
             unstable=unstable,
             skip_symlinks=True,
+            reinstall=True
         )
         print(wisepy2.Green(f"Environment {name} created at {envdir.as_posix()}."))
 
