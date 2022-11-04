@@ -90,6 +90,7 @@ def run_with_activated_env(cmd: list[str]):
 class Main:
     @staticmethod
     def switch(name: str):
+        """Switch to the specified environment"""
         with cmd_session():
             env = Ops.env(name)
             config = Ops.get_config()
@@ -99,6 +100,7 @@ class Main:
 
     @staticmethod
     def run(cmd: str):
+        """Run a command in the activated environment"""
         run_with_activated_env(shlex.split(cmd))
 
     @staticmethod
@@ -109,22 +111,37 @@ class Main:
         confirm: bool = False,
         unstable: bool = False,
     ):
+        """Create a new Julia environment
+        """
         with cmd_session():
             Ops.create_(name, upstream, version, confirm, unstable)
 
     @staticmethod
     def remove(name: str):
+        """Remove a Julia environment
+        """
         with cmd_session():
             Ops.remove_(name)
 
     @staticmethod
     def list():
+        """List all Julia environments
+        """
         with cmd_session():
             for each in Ops.list():
                 print(wisepy2.Purple(each.name, "=>", each.as_posix(), sep=" "))
+
+    @staticmethod
+    def devhere():
+        """Create a Development.toml at the current directory.
+        """
+        with cmd_session():
+            from . configloader import write_empty_config_
+            write_empty_config_()
 
 def main():
     wise(Main)()
 
 def julia():
-    run_with_activated_env(["julia", *sys.argv[1:]])
+    from jillw.configloader import get_options
+    run_with_activated_env(["julia", *get_options(), *sys.argv[1:]])

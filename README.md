@@ -68,6 +68,32 @@ Environment latest removed.
 ~/.jlenvs/myenv
 ```
 
+
+### Configuring the `julia` command (Experimental)
+
+By creating a `Development.toml` at a working directory, you can conveniently configure the `julia` command to have the following features:
+
+- reduce the startup time by using interpreted mode
+- activate a project on startup
+- preload some specified files on startup
+- preload some modules on startup
+
+Use `jillw devhere` to create a template `Development.toml` at the current working directory.
+
+The following options can be modified to fit your needs:
+
+- `min-latency`: a boolean that tells whether to use interpreted mode. This makes Julia code slow, but much faster at Julia startup and first-time module loading.
+
+- `no-startup-file`: a boolean that tells whether to load the `~/.julia/config/startup.jl` file.
+
+- `project`: a string thats indicates the path to the project that is expected to be activated on startup.
+
+- `sysimage`: a string thats indicates the path to the sysimage that is expected to be used on startup.
+
+- `using`: a list of strings that indicates the modules that are expected to be preloaded on startup.
+
+- `files`: a list of strings that indicates the files that are expected to be preloaded on startup.
+
 ## License
 
 See [LICENSE.md](./LICENSE.md).
