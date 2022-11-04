@@ -9,7 +9,7 @@ EMPTY_CONFIG = \
 r"""
 [julia]
 min-latency = false
-quite-start = false
+quiet-start = false
 no-startup-file = false
 interactive = true
 
@@ -89,8 +89,8 @@ def get_options() -> list[str]:
     if get_bool(conf, "interactive"):
         opts.append("-i")
 
-    if get_bool(conf, 'quite-start'):
-        opts.append("--quite")
+    if get_bool(conf, 'quiet-start'):
+        opts.append("--quiet")
 
     if sysimage := get_str(conf, "sysimage"):
         opts.append("--sysimage")
@@ -101,9 +101,6 @@ def get_options() -> list[str]:
 
     if preload_modules := get_str_list(conf, 'using'):
         for each in preload_modules:
-            if not each.isidentifier():
-                print(wisepy2.Yellow("Warning: skipping the module '{}' as it is not a valid identifier".format(each)))
-                continue
             opts.append("-e")
             opts.append("using {}".format(each))
 
