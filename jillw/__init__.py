@@ -14,6 +14,7 @@ root = Path("~/.jlenvs").expanduser()
 class Ops:
     @staticmethod
     def get_config(new_conf: "dict | None" = None) -> dict:
+        root.mkdir(mode=0o755, parents=True, exist_ok=True)
         config_file = root.joinpath("config.json")
         if config_file.exists():
             if new_conf is None:
