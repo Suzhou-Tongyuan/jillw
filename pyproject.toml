@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jillw"
-version = "0.2.1"
+version = "0.2.2"
 description = "The wrapper for jill.py and manage Julia environments with Python virtualenv"
 authors = ["Suzhou-tongyuan <support@tongyuan.cc>"]
 license = "mit"
