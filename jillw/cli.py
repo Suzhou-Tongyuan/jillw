@@ -77,15 +77,21 @@ def run_with_activated_env(cmd: list[str]):
     if os.name == "nt":
         envdict = os.environ.copy()
         envdict["VIRTUAL_ENV"] = str(env)
-        envdict["PYTHONHOME"] = ""
-        envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env / "Scripts")
-        subprocess.run(cmd, env=envdict, shell=True)
+        try:
+            del envdict["PYTHONHOME"]
+        except KeyError:
+            pass
+        envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env, env / "Scripts")
     else:
         envdict = os.environ.copy()
         envdict["VIRTUAL_ENV"] = str(env)
-        envdict["PYTHONHOME"] = ""
-        envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env / "bin")
-        subprocess.run(cmd, env=envdict)
+        try:
+            del envdict["PYTHONHOME"]
+        except KeyError:
+            pass
+        envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env, env / "bin")
+
+    subprocess.run(cmd, env=envdict, shell=False)
 
 class Main:
     @staticmethod
