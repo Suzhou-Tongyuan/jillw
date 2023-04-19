@@ -79,13 +79,13 @@ def run_with_activated_env(cmd: list[str]):
         envdict["VIRTUAL_ENV"] = str(env)
         envdict["PYTHONHOME"] = ""
         envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env / "Scripts")
+        subprocess.run(cmd, env=envdict, shell=True)
     else:
         envdict = os.environ.copy()
         envdict["VIRTUAL_ENV"] = str(env)
         envdict["PYTHONHOME"] = ""
         envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env / "bin")
-
-    subprocess.run(cmd, env=envdict, shell=True)
+        subprocess.run(cmd, env=envdict)
 
 class Main:
     @staticmethod
