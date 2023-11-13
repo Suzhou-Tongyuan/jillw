@@ -37,22 +37,12 @@ def expect_no_stdout():
         msg = sio.getvalue()
         print(wisepy2.Red(msg))
 
-
-def _expand_or_resolve(p: Path | str):
-    if isinstance(p, str):
-        p = Path(p)
-    try:
-        return p.resolve()
-    except:
-        return p.absolute()
-
-
 def append_PATH(PATH: str, *paths: Path):
     has_added = [False] * len(paths)
-    PATHs = set(map(_expand_or_resolve, PATH.split(os.pathsep)))
+    PATHs = set(map(os.path.normpath, PATH.split(os.pathsep)))
     for i, path in enumerate(paths):
         try:
-            path = path.resolve()
+            path = os.path.normpath(path)
         except:
             continue
         if path in PATHs:
