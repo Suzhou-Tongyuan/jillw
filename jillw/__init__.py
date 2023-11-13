@@ -5,8 +5,6 @@ import shutil
 import json
 import sys
 from pathlib import Path
-from jill.install import install_julia
-
 
 root = Path("~/.jlenvs").expanduser()
 
@@ -35,6 +33,8 @@ class Ops:
         confirm: bool = False,
         unstable: bool = False,
     ):
+        from jill.install import install_julia
+
         envdir = root.joinpath(name)
         Ops.get_config()
         if envdir.exists():

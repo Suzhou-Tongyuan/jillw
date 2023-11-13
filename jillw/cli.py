@@ -149,5 +149,10 @@ def main():
     wise(Main)()
 
 def julia():
-    from jillw.configloader import get_options
-    run_with_activated_env(["julia", *get_options(), *sys.argv[1:]])
+    extra_options: list[str] = []
+
+    if os.environ.get("DEV", "").strip():
+        from jillw.configloader import get_options
+        extra_options = get_options()
+
+    run_with_activated_env(["julia", *extra_options, *sys.argv[1:]])
