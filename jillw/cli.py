@@ -38,22 +38,10 @@ def expect_no_stdout():
         print(wisepy2.Red(msg))
 
 def append_PATH(PATH: str, *paths: Path):
-    has_added = [False] * len(paths)
-    PATHs = set(map(os.path.normpath, PATH.split(os.pathsep)))
-    for i, path in enumerate(paths):
-        try:
-            path = os.path.normpath(path)
-        except:
-            continue
-        if path in PATHs:
-            has_added[i] = True
-    return (
-        os.pathsep.join(
-            [str(paths[i]) for i, added in enumerate(has_added) if not added]
-        )
-        + os.pathsep
-        + PATH
-    )
+    return os.pathsep.join([
+        *map(os.path.normpath, paths),
+        *PATH.split(os.pathsep)
+    ])
 
 def run_with_activated_env(cmd: list[str]):
     config = Ops.get_config()
@@ -64,6 +52,13 @@ def run_with_activated_env(cmd: list[str]):
         return
     env = Path(Ops.env(current))
     jlbindir = find_julia_binary_dir(env)
+
+    if cmd and cmd[0] == "julia":
+        if os.name == "nt":
+            cmd[0] = jlbindir.joinpath("julia.exe").as_posix()
+        else:
+            cmd[0] = jlbindir.joinpath("julia").as_posix()
+
     if os.name == "nt":
         envdict = os.environ.copy()
         envdict["VIRTUAL_ENV"] = str(env)
