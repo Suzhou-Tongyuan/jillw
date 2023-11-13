@@ -2,6 +2,11 @@
 
 ## v0.3.1
 
+1. Force appending environment specific binary directories to `PATH`:
+
+   - the directory of julia executable
+
+   - the directory of Python `Scripts/` directory
 
 ## v0.3.0
 

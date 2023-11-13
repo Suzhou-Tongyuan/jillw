@@ -50,6 +50,7 @@ def run_with_activated_env(cmd: list[str]):
     if current is None:
         print(wisepy2.Yellow("No activated environment"))
         return
+
     env = Path(Ops.env(current))
     jlbindir = find_julia_binary_dir(env)
 
