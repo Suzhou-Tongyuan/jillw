@@ -1,14 +1,17 @@
 from __future__ import annotations
-from jillw import Ops
-from wisepy2 import wise
-from pathlib import Path
-import os
+
 import contextlib
 import io
-import sys
-import subprocess
-import wisepy2
+import os
 import shlex
+import subprocess
+import sys
+from pathlib import Path
+
+import wisepy2
+from wisepy2 import wise
+
+from jillw import Ops
 
 
 def find_julia_binary_dir(env: Path):
@@ -37,11 +40,10 @@ def expect_no_stdout():
         msg = sio.getvalue()
         print(wisepy2.Red(msg))
 
+
 def append_PATH(PATH: str, *paths: Path):
-    return os.pathsep.join([
-        *map(os.path.normpath, paths),
-        *PATH.split(os.pathsep)
-    ])
+    return os.pathsep.join([*map(os.path.normpath, paths), *PATH.split(os.pathsep)])
+
 
 def run_with_activated_env(cmd: list[str]):
     config = Ops.get_config()
@@ -67,7 +69,9 @@ def run_with_activated_env(cmd: list[str]):
             del envdict["PYTHONHOME"]
         except KeyError:
             pass
-        envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env, env / "Scripts")
+        envdict["PATH"] = append_PATH(
+            os.environ["PATH"], jlbindir, env, env / "Scripts"
+        )
     else:
         envdict = os.environ.copy()
         envdict["VIRTUAL_ENV"] = str(env)
@@ -75,9 +79,10 @@ def run_with_activated_env(cmd: list[str]):
             del envdict["PYTHONHOME"]
         except KeyError:
             pass
-        envdict['PATH'] = append_PATH(os.environ["PATH"], jlbindir, env, env / "bin")
+        envdict["PATH"] = append_PATH(os.environ["PATH"], jlbindir, env, env / "bin")
 
     subprocess.run(cmd, env=envdict, shell=False)
+
 
 class Main:
     @staticmethod
@@ -103,42 +108,42 @@ class Main:
         confirm: bool = False,
         unstable: bool = False,
     ):
-        """Create a new Julia environment
-        """
+        """Create a new Julia environment"""
         with cmd_session():
             Ops.create_(name, upstream, version, confirm, unstable)
 
     @staticmethod
     def remove(name: str):
-        """Remove a Julia environment
-        """
+        """Remove a Julia environment"""
         with cmd_session():
             Ops.remove_(name)
 
     @staticmethod
     def list():
-        """List all Julia environments
-        """
+        """List all Julia environments"""
         with cmd_session():
             for each in Ops.list():
                 print(wisepy2.Purple(each.name, "=>", each.as_posix(), sep=" "))
 
     @staticmethod
     def devhere():
-        """Create a Development.toml at the current directory.
-        """
+        """Create a Development.toml at the current directory."""
         with cmd_session():
-            from . configloader import write_empty_config_
+            from .configloader import write_empty_config_
+
             write_empty_config_()
+
 
 def main():
     wise(Main)()
+
 
 def julia():
     extra_options: list[str] = []
 
     if os.environ.get("DEV", "").strip():
         from jillw.configloader import get_options
+
         extra_options = get_options()
 
     run_with_activated_env(["julia", *extra_options, *sys.argv[1:]])
