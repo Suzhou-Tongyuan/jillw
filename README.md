@@ -1,5 +1,12 @@
 # JILL Wrapper
 
+[![CI](https://github.com/Suzhou-Tongyuan/jillw/actions/workflows/ci.yml/badge.svg)](https://github.com/Suzhou-Tongyuan/jillw/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/Suzhou-Tongyuan/jillw/branch/master/graph/badge.svg)](https://codecov.io/gh/Suzhou-Tongyuan/jillw)
+[![versions](https://img.shields.io/pypi/pyversions/jillw.svg)](https://pypi.org/project/jillw/#history)
+[![pypi](https://img.shields.io/pypi/v/jillw.svg)](https://pypi.org/project/jillw/)
+[![License](https://img.shields.io/badge/License-MIT--Clause-green.svg)](https://github.com/Suzhou-Tongyuan/jillw/blob/main/LICENSE.md)
+
+
 JILL Wrapper (`jillw`) is a lightweight and cross-platform Julia version manager. This work is based on [johnnychen94/jill.py](https://github.com/johnnychen94/jill.py) and [Python venv](https://docs.python.org/3/library/venv.html).
 
 `jillw` targets several different use cases:

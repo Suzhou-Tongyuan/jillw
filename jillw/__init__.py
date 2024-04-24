@@ -1,17 +1,20 @@
 from __future__ import annotations
-import venv
-import wisepy2
-import shutil
+
 import json
+import shutil
 import sys
+import venv
 from pathlib import Path
+from typing import Any, Dict, Union
+
+import wisepy2
 
 root = Path("~/.jlenvs").expanduser()
 
 
 class Ops:
     @staticmethod
-    def get_config(new_conf: "dict | None" = None) -> dict:
+    def get_config(new_conf: "dict | None" = None) -> Union[Dict, Any]:
         root.mkdir(mode=0o755, parents=True, exist_ok=True)
         config_file = root.joinpath("config.json")
         if config_file.exists():
@@ -48,7 +51,7 @@ class Ops:
             upstream=upstream,
             unstable=unstable,
             skip_symlinks=True,
-            reinstall=True
+            reinstall=True,
         )
         print(wisepy2.Green(f"Environment {name} created at {envdir.as_posix()}."))
 
